@@ -224,18 +224,18 @@ according to [Openshift Documentation - Monitoring For user defined projects](ht
 
 
 
-.1    Extract a token to connect to Prometheus:
+1.    Extract a token to connect to Prometheus:
 ```bash
     $ SECRET=`oc get secret -n openshift-user-workload-monitoring | grep  prometheus-user-workload-token | head -n 1 | awk '{print $1 }'`
 ```
 ```bash
     $ TOKEN=`echo $(oc get secret $SECRET -n openshift-user-workload-monitoring -o json | jq -r '.data.token') | base64 -d`
 ```
-.2    Extract your route host:
+2.    Extract your route host:
 ```bash
     $ THANOS_QUERIER_HOST=`oc get route thanos-querier -n openshift-monitoring -o json | jq -r '.spec.host'`
 ```
-.3    Test the extracted values by quering the metrics of your services in the command line. For example:
+3.    Test the extracted values by quering the metrics of your services in the command line. For example:
 ```bash
     $ NAMESPACE=pam-monitor-01
 
@@ -321,7 +321,7 @@ according to [Openshift Documentation - Monitoring For user defined projects](ht
 
 ```
 
-.4 Create Grafana Datasource
+4. Create Grafana Datasource
 
 Open Grafana dashboard and select from the left menu the option **Configuration -> Data Sources**
 
@@ -357,11 +357,20 @@ if everything is ok the following banner will be displayed
 
 ### Dashboard import ###
 
-To import the dashboard 
+To import the dashboard
+
+
+1. download the dashboard from [here](grafana/dashboard/PAM_OCP_Grafana_Dashboard.json)
+
+2. from the Grafana homepage select **Create - Import**
 
 ![Import - 01](docs/images/grafana/png/Import_01.png)
 
+3. click on **Upload JSON file**
+
 ![Import - 02](docs/images/grafana/png/Import_02.png)
+
+4. In the summary screen click on "Import"
 
 ![Import - 03](docs/images/grafana/png/Import_03.png)
 
