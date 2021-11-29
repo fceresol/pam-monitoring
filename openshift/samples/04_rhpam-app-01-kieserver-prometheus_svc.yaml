@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: KIE server additional Prometheus ports. (KIE server)
+  labels:
+    app: rhpam-app-01
+    application: rhpam-app-01
+    service: rhpam-app-01-kieserver
+  name: rhpam-app-01-kieserver-prometheus
+  namespace: pam-monitor-01
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: prometheus
+    port: 9799
+    protocol: TCP
+    targetPort: 9799
+  selector:
+    deploymentConfig: rhpam-app-01-kieserver
+  type: ClusterIP
+status:
+  loadBalancer: {}

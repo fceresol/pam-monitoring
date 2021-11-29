@@ -1,0 +1,26 @@
+apiVersion: app.kiegroup.org/v2
+kind: KieApp
+metadata:
+  name: rhpam-app-01
+  namespace: pam-monitor-01
+spec:
+  commonConfig:
+    adminPassword: admin
+    adminUser: adminUser
+    keyStorePassword: wildcard
+  environment: rhpam-authoring
+  objects:
+    console:
+      keystoreSecret: rhpam-wildcard-keystore-secret
+    servers:
+    - database:
+        type: postgresql
+      env:
+      - name: PROMETHEUS_SERVER_EXT_DISABLED
+        value: "false"
+      - name: AB_PROMETHEUS_ENABLE
+        value: "true"
+      jvm:
+        javaOptsAppend: -Dwildfly.statistics-enabled=true
+      keystoreSecret: rhpam-wildcard-keystore-secret
+      replicas: 1
